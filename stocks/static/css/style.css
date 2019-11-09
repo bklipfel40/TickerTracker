@@ -1,0 +1,17 @@
+.company_header {
+    display: inline-block;
+    vertical-align: center;
+}
+
+#company_logo {
+    width: 50;
+    vertical-align: center;
+}
+
+.positive_change {
+    color: green;
+}
+
+.negative_change {
+    color: red;
+}

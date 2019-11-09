@@ -1,0 +1,9 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form method="get" action="{% url 'stocks:search_price' %}">
+    {% csrf_token %}
+  Stock Name:<br>
+  <input type="text" name="txt_ticker">
+    <br>
+  <input type="submit" value="search_price">
+</form>

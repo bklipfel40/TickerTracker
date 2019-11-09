@@ -1,0 +1,55 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+<h1>Financial Summary</h1>
+<hr />
+<table>
+    <tr>
+        <td>
+            <img src="{{profile.image}}" alt="company_logo" class="company_header" id="company_logo"/>
+        </td>
+        <td>
+           <h2 class="company_header">{{profile.company_name}} ({{profile.symbol}}) - {{profile.sector}}</h2>
+        </td>
+    </tr>
+</table>
+
+<!-- Display the current price and change difference -->
+<table>
+    <tr>
+            {% if '-' in profile.changes_percentages %}
+            <td class="negative_change">
+            {% else %}
+            <td class="positive_change">
+            {% endif %}
+                {{ profile.changes_percentage }}
+            </td>
+        <td>
+            {{profile.price}}
+        </td>
+        <td>
+            {{profile.changes}}
+        </td>
+    </tr>
+</table>
+
+<h3>Price Per Share (days)</h3>
+<canvas id="price_chart" height="200" width="800"></canvas>
+
+<a href="{% url 'stocks:search_cashflow' %}">See Free Cash Flow</a>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+<script type="text/javascript">
+    $.get('{% url "stocks:price" %}', function(data) {
+        var ctx = $("#price_chart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                    maintainAspectRatio: false,
+                    responsive: false
+                }
+        });
+    });
+</script>
